@@ -1,26 +1,45 @@
 import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form"
+
+import InputEmail from "../../components/InputEmail/InputEmail";
+import InputPassword from "../../components/InputPassword/InputPassword";
 
 import urlPhoto from "../../assets/men-login.png"
 
 
 import "./LoginPages.css"
 
+interface IForm {
+    email: string;
+    password: string;
+}
+
 function LoginPages() {
+    const { register, handleSubmit, formState: { errors } } = useForm<IForm>();
+    console.log(errors);
+
+
+    const onSubmit = async (data: IForm) => {
+        console.log(data);
+
+    }
+    const regEmail = register('email', {
+        required: 'Please input email',
+        validate: (value) => ((value.length > 5)), pattern: /^\S+@\S+\.\S+$/
+    });
+    const regPassword = register('password', {
+        required: 'Please input SDSD',
+        validate: (value) => ((value.length > 5)), pattern: /^\S+@\S+\.\S+$/
+
+    });
     return (
         <div className="wrapper">
             <div className="page-auth">
                 <div className="form">
                     <h1 className="form__head">Welcome</h1>
-                    <form>
-                        <label className="form__label">
-                            <span>Email</span>
-                            <input type="email" placeholder="Email" />
-                        </label>
-                        <label className="form__label">
-                            <span>Password</span>
-                            <input type="password" placeholder="Password" />
-                            <span className="password__text "></span>
-                        </label>
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <InputEmail register={regEmail} error={errors.email}></InputEmail>
+                        <InputPassword register={regPassword} error={errors.password}></InputPassword>
                         <div className="form__info">
                             <label className="label__checkbox">
                                 <input type="checkbox" />

@@ -6,12 +6,14 @@ import CreatePages from "./pages/CreatePages/CreatePages";
 import HomePages from "./pages/HomePages/HomePages";
 import ErrorPages from "./pages/ErrorPages/ErrorPages";
 
+import { RequireAuth } from "./hoc/RequireAuth";
+
 function App() {
 
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/">
-        <Route index element={<HomePages />}></Route>
+        <Route index element={<RequireAuth><HomePages /></RequireAuth>}></Route>
 
         <Route path="sign-up" element={<CreatePages />}></Route>
         <Route path="login" element={<LoginPages />}></Route>

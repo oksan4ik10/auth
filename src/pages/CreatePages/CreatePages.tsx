@@ -10,7 +10,7 @@ import {
 import InputEmail from "../../components/InputEmail/InputEmail";
 import InputPassword from "../../components/InputPassword/InputPassword";
 
-import urlPhoto from "../../assets/men-login.png"
+import urlPhoto from "../../assets/man-sign.png"
 
 
 import { useAppDispatch } from "../../store/store";

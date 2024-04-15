@@ -8,9 +8,10 @@ import { TInputPropsForm } from '../../models/type';
 interface IProps {
     register: TInputPropsForm;
     error: FieldError | undefined;
+    errorAuth: boolean
 }
 function InputPassword(props: IProps) {
-    const { register, error } = props;
+    const { register, error, errorAuth } = props;
     const ref = useRef<HTMLLabelElement>(null);
     const [isOpenPassword, setIsOpenPassword] = useState(false)
 
@@ -26,7 +27,7 @@ function InputPassword(props: IProps) {
     console.log(register);
 
     return (<>
-        <label className={"form__label password " + (error ? "error" : "")} ref={ref}>
+        <label className={"form__label password " + ((error || errorAuth) ? "error" : "")} ref={ref}>
             <span>Password</span>
             <input type="password" placeholder="Password" name="password" {...register} />
 

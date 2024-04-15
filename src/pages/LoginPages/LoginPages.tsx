@@ -1,5 +1,11 @@
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form"
+
+import {
+    signInWithEmailAndPassword,
+    getAuth,
+} from 'firebase/auth';
 
 import InputEmail from "../../components/InputEmail/InputEmail";
 import InputPassword from "../../components/InputPassword/InputPassword";
@@ -8,6 +14,10 @@ import urlPhoto from "../../assets/men-login.png"
 
 
 import "./LoginPages.css"
+
+import { useAppDispatch } from "../../store/store";
+import { setToken } from "../../store/reducers/userReducer";
+
 
 interface IForm {
     email: string;
@@ -20,11 +30,30 @@ function LoginPages() {
     console.log(errors);
 
     const navigate = useNavigate();
+    const auth = getAuth();
 
+    const [errorAuth, setErrorAuth] = useState(false);
+
+    // !Qw1234567 kj@mail.ru
+    const dispatch = useAppDispatch();
     const onSubmit = async (data: IForm) => {
-        console.log(data);
-        localStorage.setItem("tokenAuth", "23")
-        navigate(`/`)
+
+        try {
+            const s = await signInWithEmailAndPassword(auth, data.email, data.password);
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const token = (s as any).user.accessToken;
+            if (data.checkbox) localStorage.setItem("tokenAuth", token)
+            dispatch(setToken(token))
+            navigate(`/`)
+
+
+        } catch (e) {
+
+            setErrorAuth(true);
+            return
+
+        }
+
 
     }
     const regEmail = register('email', {
@@ -41,8 +70,8 @@ function LoginPages() {
                 <div className="form">
                     <h1 className="form__head">Welcome</h1>
                     <form onSubmit={handleSubmit(onSubmit)}>
-                        <InputEmail register={regEmail} error={errors.email}></InputEmail>
-                        <InputPassword register={regPassword} error={errors.password}></InputPassword>
+                        <InputEmail register={regEmail} error={errors.email} errorAuth={errorAuth}></InputEmail>
+                        <InputPassword register={regPassword} error={errors.password} errorAuth={errorAuth}></InputPassword>
                         <div className="form__info">
                             <label className="label__checkbox">
                                 <input type="checkbox"  {...register("checkbox")} />

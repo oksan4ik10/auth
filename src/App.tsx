@@ -1,6 +1,8 @@
 import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from "react-router-dom";
 import './App.css'
 
+import "./firebase"
+
 import LoginPages from "./pages/LoginPages/LoginPages";
 import CreatePages from "./pages/CreatePages/CreatePages";
 import HomePages from "./pages/HomePages/HomePages";

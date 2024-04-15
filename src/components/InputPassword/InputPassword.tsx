@@ -24,12 +24,11 @@ function InputPassword(props: IProps) {
         setIsOpenPassword(!isOpenPassword);
 
     }
-    console.log(register);
 
     return (<>
         <label className={"form__label password " + ((error || errorAuth) ? "error" : "")} ref={ref}>
-            <span>Password</span>
-            <input type="password" placeholder="Password" name="password" {...register} />
+            <span>{register.name === "password" ? "Password" : "Confirm Password"}</span>
+            <input type="password" placeholder="Password" name={register.name} {...register} />
 
             <span className={"password__text " + (isOpenPassword ? "check" : "")} onClick={openPassword}></span>
             {error && <p className='error-message'>{error.message}</p>}

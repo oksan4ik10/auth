@@ -12,9 +12,6 @@ import InputPassword from "../../components/InputPassword/InputPassword";
 
 import urlPhoto from "../../assets/men-login.png"
 
-
-import "./LoginPages.css"
-
 import { useAppDispatch } from "../../store/store";
 import { setToken } from "../../store/reducers/userReducer";
 
@@ -62,7 +59,6 @@ function LoginPages() {
     });
     const regPassword = register('password', {
         required: "You must specify a password",
-        pattern: { value: /(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*]{6,}/g, message: "Your password is not correct" }
     });
     return (
         <div className="wrapper">

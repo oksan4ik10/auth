@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form"
 
 import InputEmail from "../../components/InputEmail/InputEmail";
@@ -12,25 +12,28 @@ import "./LoginPages.css"
 interface IForm {
     email: string;
     password: string;
+    checkbox: boolean;
 }
 
 function LoginPages() {
-    const { register, handleSubmit, formState: { errors } } = useForm<IForm>();
+    const { register, handleSubmit, formState: { errors } } = useForm<IForm>({ shouldUseNativeValidation: false, });
     console.log(errors);
 
+    const navigate = useNavigate();
 
     const onSubmit = async (data: IForm) => {
         console.log(data);
+        localStorage.setItem("tokenAuth", "23")
+        navigate(`/`)
 
     }
     const regEmail = register('email', {
-        required: 'Please input email',
+        required: 'You must specify a email',
         validate: (value) => ((value.length > 5)), pattern: /^\S+@\S+\.\S+$/
     });
     const regPassword = register('password', {
-        required: 'Please input SDSD',
-        validate: (value) => ((value.length > 5)), pattern: /^\S+@\S+\.\S+$/
-
+        required: "You must specify a password",
+        pattern: { value: /(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*]{6,}/g, message: "Your password is not correct" }
     });
     return (
         <div className="wrapper">
@@ -42,7 +45,7 @@ function LoginPages() {
                         <InputPassword register={regPassword} error={errors.password}></InputPassword>
                         <div className="form__info">
                             <label className="label__checkbox">
-                                <input type="checkbox" />
+                                <input type="checkbox"  {...register("checkbox")} />
                                 <span className="label__check"></span>
                                 <span className="label__text">Remember Me</span>
                             </label>

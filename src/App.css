@@ -219,6 +219,16 @@
     margin-top: 30px;
 }
 
+/* .form__label.error {
+    margin-bottom: 30px;
+} */
+
+.error-message {
+    position: absolute;
+    left: 0;
+    bottom: -30px;
+    color: var(--color-red)
+}
 
 .form__label.error input {
     border-color: var(--color-red);

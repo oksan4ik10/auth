@@ -67,6 +67,7 @@ function CreatePages() {
         pattern: { value: /(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*]{6,}/g, message: "Your password is not correct" }
     });
     const regPasswordRepeat = register('password_repeat', {
+        required: "You must specify a confirm password",
         validate: value =>
             value === password.current || "The passwords do not match"
     });
